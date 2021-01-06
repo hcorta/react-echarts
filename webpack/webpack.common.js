@@ -1,42 +1,28 @@
 'use strict'
 
 // Dependencies
-const pJson = require('../package.json')
 const webpack = require('webpack')
-const path = require('path')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+// Config
+const config = require('../config')
 
 // Paths setup
-const srcPath = path.resolve(__dirname, '../src')
-const libPath = path.resolve(__dirname, '../lib')
-const entryPoint = path.resolve(__dirname, '../src/index.js')
+const srcPath = config.paths.src()
+const publicPath = config.paths.public()
 
 module.exports = {
-  target: 'web',
-  entry: entryPoint,
-  output: {
-    path: libPath,
-    filename: 'index.js',
-    library: pJson.name,
-    libraryTarget: 'umd',
-    umdNamedDefine: true
-  },
+  mode: config.compiler.mode,
+  target: config.compiler.target,
   resolve: {
-    modules: [srcPath, 'node_modules'],
-    extensions: ['.js', '.json', '.jsx'],
-    alias: {
-      constants$: path.resolve(__dirname, '../src/constants'),
-      core$: path.resolve(__dirname, '../src/core'),
-      utils$: path.resolve(__dirname, '../src/utils'),
-      components$: path.resolve(__dirname, '../src/components'),
-      themes$: path.resolve(__dirname, '../src/themes')
-    }
+    modules: [srcPath, publicPath, 'node_modules'],
+    extensions: ['.js', '.json', '.jsx', '.css']
   },
   plugins: [
-    new CleanWebpackPlugin(),
-    new webpack.ProvidePlugin({
-      React: 'react',
-      PropTypes: 'prop-types'
+    new webpack.DefinePlugin(config.globals),
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      title: 'React ECharts'
     })
   ],
   module: {
@@ -46,9 +32,17 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            cacheDirectory: false
+            cacheDirectory: true
           }
         }
+      },
+      {
+        test: /\.(jpe?g|png|gif)$/,
+        use: [{ loader: 'file-loader' }]
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        use: [{ loader: 'file-loader' }]
       }
     ]
   }
