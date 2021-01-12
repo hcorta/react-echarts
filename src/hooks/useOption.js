@@ -13,6 +13,7 @@ export function useOption ({
   stacked,
   ...rest
 }) {
+  debugger
   let finalSeries = series
   let finalXaxis = xAxis
 

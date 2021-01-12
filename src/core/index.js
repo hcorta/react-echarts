@@ -46,7 +46,7 @@ import 'zrender/lib/svg/svg'
 import { isEqual } from 'utils'
 
 export class ReactEchartsCore extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.echartsLib = echarts
     this.echartsInstance = null
@@ -118,13 +118,11 @@ export class ReactEchartsCore extends Component {
   setEchartsInstance = () => {
     const { theme, group, renderer = 'svg' } = this.props
 
-    this.echartsInstance = this.echartsLib.init(
-      this.containerRef.current,
+    this.echartsInstance = this.echartsLib.init(this.containerRef.current,
       theme,
       {
-        renderer,
-      }
-    )
+        renderer
+      })
 
     if (group) {
       this.echartsInstance.group = group
@@ -151,24 +149,18 @@ export class ReactEchartsCore extends Component {
     this.echartsInstance.on('highlight', this.props.onHighlight)
     this.echartsInstance.on('downplay', this.props.onDownplay)
     this.echartsInstance.on('selectchanged', this.props.onSelectChanged)
-    this.echartsInstance.on(
-      'legendsselectchanged',
-      this.props.onLegendSelectChanged
-    )
+    this.echartsInstance.on('legendsselectchanged',
+      this.props.onLegendSelectChanged)
     this.echartsInstance.on('legendselected', this.props.onLegendSelected)
     this.echartsInstance.on('legendunselected', this.props.onLegendUnselected)
-    this.echartsInstance.on(
-      'legendinverseselect',
-      this.props.onLegendInverseSelect
-    )
+    this.echartsInstance.on('legendinverseselect',
+      this.props.onLegendInverseSelect)
     this.echartsInstance.on('legendscroll', this.props.onLegendScroll)
     this.echartsInstance.on('datazoom', this.props.onDataZoom)
     this.echartsInstance.on('datarangeselected', this.props.onDataRangeSelected)
     this.echartsInstance.on('timelinechanged', this.props.onTimelineChanged)
-    this.echartsInstance.on(
-      'timelineplaychanged',
-      this.props.onTimelinePlayChanged
-    )
+    this.echartsInstance.on('timelineplaychanged',
+      this.props.onTimelinePlayChanged)
     this.echartsInstance.on('restore', this.props.onRestore)
     this.echartsInstance.on('dataviewchanged', this.props.onDataViewChanged)
     this.echartsInstance.on('magictypechanged', this.props.onMagicTypeChanged)
@@ -176,14 +168,10 @@ export class ReactEchartsCore extends Component {
     this.echartsInstance.on('geoselected', this.props.onGeoSelected)
     this.echartsInstance.on('geounselected', this.props.onGeoUnselected)
     this.echartsInstance.on('axisareaselected', this.props.onAxisAreaSelected)
-    this.echartsInstance.on(
-      'focusnodeadjacency',
-      this.props.onFocusNodeadJacency
-    )
-    this.echartsInstance.on(
-      'unfocusnodeadjacency',
-      this.props.onUnfocusNodeAdjacency
-    )
+    this.echartsInstance.on('focusnodeadjacency',
+      this.props.onFocusNodeadJacency)
+    this.echartsInstance.on('unfocusnodeadjacency',
+      this.props.onUnfocusNodeAdjacency)
     this.echartsInstance.on('brush', this.props.onBrush)
     this.echartsInstance.on('brushend', this.props.onBrushEnd)
     this.echartsInstance.on('brushselected', this.props.onBrushSelected)
@@ -199,7 +187,7 @@ export class ReactEchartsCore extends Component {
       replaceMerge: this.props.replaceMerge,
       lazyUpdate: this.props.lazyUpdate,
       silent: this.props.silent,
-      transition: this.props.transition,
+      transition: this.props.transition
     })
   }
 

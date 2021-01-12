@@ -1,0 +1,4 @@
+.react_echarts__examples {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+}
