@@ -1,3 +1,4 @@
-export * from './Docs/index.mdx'
-export * from './Examples'
-export * from './Home'
+export * from "./Playground";
+export * from "./Gallery";
+export * from "./Docs";
+export * from "./Home";

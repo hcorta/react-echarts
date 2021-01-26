@@ -4,43 +4,53 @@
 import React, { Component, createRef } from 'react'
 
 import * as echarts from 'echarts/lib/echarts'
-import 'echarts/lib/chart/line'
+
+// Import series types
 import 'echarts/lib/chart/bar'
-import 'echarts/lib/chart/pie'
-import 'echarts/lib/chart/scatter'
-import 'echarts/lib/chart/radar'
-import 'echarts/lib/chart/heatmap'
-import 'echarts/lib/chart/sankey'
-import 'echarts/lib/chart/map'
-import 'echarts/lib/chart/treemap'
-import 'echarts/lib/chart/funnel'
-import 'echarts/lib/chart/sunburst'
-import 'echarts/lib/chart/graph'
+import 'echarts/lib/chart/custom'
 import 'echarts/lib/chart/effectScatter'
+import 'echarts/lib/chart/funnel'
+import 'echarts/lib/chart/graph'
+import 'echarts/lib/chart/heatmap'
+import 'echarts/lib/chart/line'
+import 'echarts/lib/chart/lines'
+import 'echarts/lib/chart/map'
+import 'echarts/lib/chart/pie'
+import 'echarts/lib/chart/radar'
+import 'echarts/lib/chart/sankey'
+import 'echarts/lib/chart/scatter'
+import 'echarts/lib/chart/sunburst'
+import 'echarts/lib/chart/themeRiver'
+import 'echarts/lib/chart/tree'
+import 'echarts/lib/chart/treemap'
 
-// import 'echarts/lib/chart/gauge'
-// import 'echarts/lib/chart/parallel'
-// import 'echarts/lib/chart/boxplot'
-// import 'echarts/lib/chart/candlestick'
-// import 'echarts/lib/chart/lines'
-
-// import 'echarts/lib/component/graphic'
+// Import components
+import 'echarts/lib/component/angleAxis'
+import 'echarts/lib/component/axis'
+import 'echarts/lib/component/calendar'
+import 'echarts/lib/component/dataZoom'
+import 'echarts/lib/component/geo'
 import 'echarts/lib/component/grid'
+import 'echarts/lib/component/gridSimple'
 import 'echarts/lib/component/legend'
 import 'echarts/lib/component/legendScroll'
-import 'echarts/lib/component/tooltip'
-import 'echarts/lib/component/polar'
-import 'echarts/lib/component/geo'
-import 'echarts/lib/component/title'
-import 'echarts/lib/component/dataZoom'
-import 'echarts/lib/component/visualMap'
-import 'echarts/lib/component/markPoint'
-import 'echarts/lib/component/markLine'
 import 'echarts/lib/component/markArea'
+import 'echarts/lib/component/markLine'
+import 'echarts/lib/component/markPoint'
+import 'echarts/lib/component/polar'
+import 'echarts/lib/component/radar'
+import 'echarts/lib/component/radiusAxis'
+import 'echarts/lib/component/singleAxis'
 import 'echarts/lib/component/timeline'
-// import 'echarts/lib/component/toolbox'
-
+import 'echarts/lib/component/title'
+import 'echarts/lib/component/toolbox'
+import 'echarts/lib/component/tooltip'
+import 'echarts/lib/component/visualMap'
 import 'zrender/lib/svg/svg'
+
+// Theme
+import 'echarts/lib/theme/dark'
+import 'echarts/lib/theme/light'
 
 // Utils
 import { isEqual } from 'utils'
@@ -51,6 +61,7 @@ export class ReactEchartsCore extends Component {
     this.echartsLib = echarts
     this.echartsInstance = null
     this.containerRef = createRef()
+    this.resizeObserver = null
   }
 
   shouldComponentUpdate (prevProps) {
@@ -104,7 +115,9 @@ export class ReactEchartsCore extends Component {
 
   componentWillUnmount () {
     this.disposeEchartsInstance()
-
+    this.resizeObserver.unobserve(this.containerRef.current)
+    this.resizeObserver.disconnect()
+    
     if (this.props.onUnmount) {
       this.props.onUnmount(this)
     }
@@ -130,11 +143,11 @@ export class ReactEchartsCore extends Component {
   }
 
   setResizeObserver = () => {
-    const resizeObserver = new ResizeObserver(() => {
+    this.resizeObserver = new ResizeObserver(() => {
       this.echartsInstance?.resize()
     })
 
-    resizeObserver.observe(this.containerRef.current)
+    this.resizeObserver.observe(this.containerRef.current)
   }
 
   setEchartsEvents = () => {
