@@ -13,7 +13,6 @@ export function useOption ({
   stacked,
   ...rest
 }) {
-  debugger
   let finalSeries = series
 
   // Single serie conversion
