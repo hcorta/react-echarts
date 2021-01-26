@@ -11,7 +11,7 @@
 
 A **simple** and **declarative** set of React components built on top of **ECharts**
 
-Visit [hcorta.github.io/react-echarts](hcorta.github.io/react-echarts/) for docs, examples, API and more
+Visit [hcorta.github.io/react-echarts](https://hcorta.github.io/react-echarts/) for docs, examples, API and more
 </div>
 
 ---
